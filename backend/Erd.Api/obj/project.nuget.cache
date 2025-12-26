@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "dNBt43GNjvU=",
+  "success": true,
+  "projectFilePath": "/Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/Erd.Api.csproj",
+  "expectedPackageFiles": [
+    "/Users/knotbott/.nuget/packages/microsoft.aspnetcore.openapi/9.0.8/microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
+    "/Users/knotbott/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

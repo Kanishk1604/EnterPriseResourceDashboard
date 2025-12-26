@@ -1,0 +1,6 @@
+@Erd.Api_HostAddress = http://localhost:5083
+
+GET {{Erd.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
