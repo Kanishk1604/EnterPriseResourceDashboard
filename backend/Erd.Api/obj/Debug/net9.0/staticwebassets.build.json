@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "6wkMalXt3CQVRtQ6zGVQk0WiuUwvYHUfLl8lFkdzuLc=",
+  "Source": "Erd.Api",
+  "BasePath": "_content/Erd.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
