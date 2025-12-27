@@ -57,6 +57,25 @@ builder.Services
             ValidAudience = jwtAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
+        
+        opt.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine("JWT AUTH FAILED: " + context.Exception.Message);
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine("JWT AUTH SUCCESS");
+                return Task.CompletedTask;
+            },
+            OnMessageReceived = context =>
+            {
+                Console.WriteLine("JWT RECEIVED");
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization();
@@ -77,6 +96,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseCors("dev");
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
