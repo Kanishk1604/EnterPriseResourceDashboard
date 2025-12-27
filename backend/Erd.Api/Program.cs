@@ -40,6 +40,9 @@ builder.Services.AddCors(opt =>
         p.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(_ => true));
 });
 
+builder.Services.AddScoped<PasswordService>();
+builder.Services.AddScoped<JwtTokenService>();
+
 var app = builder.Build();
 
 app.UseSwagger();
