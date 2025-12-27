@@ -3,7 +3,7 @@ using Erd.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
+using Erd.Api.Auth;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
