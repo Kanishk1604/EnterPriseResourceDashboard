@@ -4,6 +4,8 @@ using Erd.Api.DTOs;
 using Erd.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Erd.Api.Controllers;
 
@@ -68,5 +70,19 @@ public class AuthController : ControllerBase
             user.Role.Name);
 
         return Ok(new { token });
+    }
+
+    //verification and debugging endpoint
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult Me()
+    {
+        return Ok(new
+        {
+            userId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            email = User.FindFirstValue(ClaimTypes.Email),
+            role = User.FindFirstValue(ClaimTypes.Role),
+            isAuthenticated = User.Identity?.IsAuthenticated
+        });
     }
 }
