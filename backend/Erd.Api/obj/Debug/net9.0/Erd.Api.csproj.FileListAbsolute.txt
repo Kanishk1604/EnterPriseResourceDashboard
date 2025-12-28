@@ -141,3 +141,5 @@
 /Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/obj/Debug/net9.0/Erd.Api.genruntimeconfig.cache
 /Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/obj/Debug/net9.0/ref/Erd.Api.dll
 /Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/bin/Debug/net9.0/Admin.json
+/Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/bin/Debug/net9.0/Employee.json
+/Users/knotbott/Projects/EnterPriseResourceDashboard/backend/Erd.Api/bin/Debug/net9.0/Manager.json
