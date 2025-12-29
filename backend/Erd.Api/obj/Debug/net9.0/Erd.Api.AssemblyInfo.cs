@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Erd.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+330a3ad6b24156c61a7ef8ad7e0c99cc1a7c1048")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13056e4ade36823f117ddebbd1f7e45e243948a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Erd.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Erd.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

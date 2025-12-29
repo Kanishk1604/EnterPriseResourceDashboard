@@ -43,6 +43,54 @@ public class AssetsController : ControllerBase
         return Ok(asset);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
+    [HttpGet]
+    public async Task<IActionResult> GetAssets(
+        int page = 1,
+        int pageSize = 10,
+        string? assetType = null,
+        bool? assigned = null
+    )
+    {
+        pageSize = Math.Min(pageSize, 50);
+
+        var query = _db.Assets.AsQueryable();
+
+        // Filtering
+        if (!string.IsNullOrEmpty(assetType))
+            query = query.Where(a => a.AssetType == assetType);
+
+        if (assigned.HasValue)
+            query = assigned.Value
+                ? query.Where(a => a.AssignedToUserId != null)
+                : query.Where(a => a.AssignedToUserId == null);
+
+        var totalCount = await query.CountAsync();
+
+        var assets = await query
+            .OrderByDescending(a => a.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(a => new
+            {
+                a.Id,
+                a.Name,
+                a.AssetTag,
+                a.AssetType,
+                a.AssignedToUserId
+            })
+            .ToListAsync();
+
+        return Ok(new
+        {
+            page,
+            pageSize,
+            totalCount,
+            totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+            data = assets
+        });
+    }
+
     [Authorize(Roles = "Manager")]
     [HttpPost("{assetId}/assign")]
     public async Task<IActionResult> AssignAsset(int assetId, AssignAssetRequest request)
@@ -141,51 +189,5 @@ public class AssetsController : ControllerBase
         await _db.SaveChangesAsync();
     }   
 
-    [Authorize(Roles = "Admin,Manager")]
-    [HttpGet]
-    public async Task<IActionResult> GetAssets(
-        int page = 1,
-        int pageSize = 10,
-        string? assetType = null,
-        bool? assigned = null
-    )
-    {
-        pageSize = Math.Min(pageSize, 50);
-
-        var query = _db.Assets.AsQueryable();
-
-        // Filtering
-        if (!string.IsNullOrEmpty(assetType))
-            query = query.Where(a => a.AssetType == assetType);
-
-        if (assigned.HasValue)
-            query = assigned.Value
-                ? query.Where(a => a.AssignedToUserId != null)
-                : query.Where(a => a.AssignedToUserId == null);
-
-        var totalCount = await query.CountAsync();
-
-        var assets = await query
-            .OrderByDescending(a => a.Id)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .Select(a => new
-            {
-                a.Id,
-                a.Name,
-                a.AssetTag,
-                a.AssetType,
-                a.AssignedToUserId
-            })
-            .ToListAsync();
-
-        return Ok(new
-        {
-            page,
-            pageSize,
-            totalCount,
-            totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
-            data = assets
-        });
-    }
+    
 }

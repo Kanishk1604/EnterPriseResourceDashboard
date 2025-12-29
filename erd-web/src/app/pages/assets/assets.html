@@ -1,0 +1,33 @@
+<h2>Assets</h2>
+<button (click)="logout()">Logout</button>
+
+<p style="color: red;" *ngIf="error">{{ error }}</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="margin-top: 12px; width: 100%;">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Tag</th>
+      <th>Type</th>
+      <th>AssignedToUserId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of assets">
+      <td>{{ a.id }}</td>
+      <td>{{ a.name }}</td>
+      <td>{{ a.assetTag }}</td>
+      <td>{{ a.assetType }}</td>
+      <td>{{ a.assignedToUserId }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="margin-top: 12px;">
+  <button (click)="prev()" [disabled]="page <= 1">Prev</button>
+  <span style="margin: 0 8px;">Page {{ page }} / {{ totalPages }}</span>
+  <button (click)="next()" [disabled]="page >= totalPages">Next</button>
+</div>
+
+<p style="margin-top: 8px;">Total: {{ totalCount }}</p>
