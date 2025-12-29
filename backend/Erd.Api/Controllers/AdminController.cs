@@ -18,10 +18,30 @@ public class AdminController : ControllerBase
     }
 
     [HttpGet("audit-logs")]
-    public async Task<IActionResult> GetAuditLogs()
+    public async Task<IActionResult> GetAuditLogs(
+        int page = 1,
+        int pageSize = 10,
+        string? action = null,
+        string? entityType = null
+    )
     {
-        var logs = await _db.AuditLogs
+        pageSize = Math.Min(pageSize, 50);
+
+        var query = _db.AuditLogs.AsQueryable();
+
+        // Filtering
+        if (!string.IsNullOrEmpty(action))
+            query = query.Where(a => a.Action == action);
+
+        if (!string.IsNullOrEmpty(entityType))
+            query = query.Where(a => a.EntityType == entityType);
+
+        var totalCount = await query.CountAsync();
+
+        var logs = await query
             .OrderByDescending(a => a.TimestampUtc)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(a => new
             {
                 a.Id,
@@ -33,6 +53,13 @@ public class AdminController : ControllerBase
             })
             .ToListAsync();
 
-        return Ok(logs);
+        return Ok(new 
+        {
+            page,
+            pageSize,
+            totalCount,
+            totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+            data = logs
+        });
     }
 }
