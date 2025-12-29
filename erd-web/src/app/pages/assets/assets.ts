@@ -16,7 +16,7 @@ export class AssetsComponent implements OnInit {
   pageSize = 10;
 
   totalCount = 0;
-  totalPages = 0;
+  totalPages = 1;
   assets: any[] = [];
   error = '';
 
@@ -27,22 +27,30 @@ export class AssetsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (typeof window === 'undefined') {
+      return;
+    }
     if (!this.auth.getToken()) {
       this.router.navigate(['/login']);
       return;
     }
+
     this.load();
   }
 
   load() {
     this.error = '';
     this.assetsService.getAssets(this.page, this.pageSize).subscribe({
-      next: (res) => {
+      next: (res : any) => {
+        console.log('ASSETS RESPONSE', res);
+      console.log('ASSETS DATA', res.data);
+
         this.assets = res.data;
         this.totalCount = res.totalCount;
         this.totalPages = res.totalPages;
       },
-      error: () => {
+      error: (err : any) => {
+        console.error(err);
         this.error = 'Failed to load assets (are you logged in as Admin/Manager?)';
       }
     });

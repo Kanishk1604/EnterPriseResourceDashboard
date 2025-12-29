@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   private api = 'http://localhost:5083';
+ private tokenKey = 'token';
 
   constructor(private http: HttpClient) {}
 
@@ -16,15 +17,24 @@ export class AuthService {
     });
   }
 
-  setToken(token: string) {
-    localStorage.setItem('token', token);
+  getToken(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    return localStorage.getItem(this.tokenKey);
   }
 
-  getToken() {
-    return localStorage.getItem('token');
+  setToken(token: string) {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(this.tokenKey, token);
   }
 
   logout() {
-    localStorage.removeItem('token');
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem(this.tokenKey);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }
